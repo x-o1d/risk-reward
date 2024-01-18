@@ -22,7 +22,7 @@ function App() {
   const [render, setRender] = useState(false);
   const [generateMap, setGenerateMap] = useState(false);
 
-  const players = useRef([[0, 0, 1, 0.5, 0],[0, 0, 1, 0.5, 0]]);
+  const players = useRef([[0, 0, 1, 0.7, 0],[0, 0, 1, 0.3, 0]]);
   const mapReady = useRef(false);
   const gameRunning = useRef(false);
   const startBlock = useRef(0);
@@ -216,18 +216,22 @@ function App() {
           <div className='game-settings'>
             <div className='setting'>
               <div className='input-text'>
-                Orange player Risk factor
+                Black player Risk factor (0~1)
               </div>
               <input 
                 value={players.current[0][3]} 
                 onChange={(e) => {
-                  players.current[0][3] = e.target.value;
-                  players.current[1][3] = 1-e.target.value;
-                }}/>
+                  if(e.target.value > 0 || e.target.value < 1) {
+                    players.current[0][3] = e.target.value;
+                    players.current[1][3] = 1-e.target.value;
+                    setRender(r => !r);
+                  }
+                }}
+                disabled={gameRunning.current}/>
             </div>
             <div className='setting'>
               <div className='input-text'>
-                Purple player Risk factor
+                Pink player Risk factor
               </div>
               <input 
                 value={players.current[1][3]}
