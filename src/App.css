@@ -1,0 +1,81 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(220, 13%, 18%);
+  width: 100vw;
+  height: 100vh;
+}
+
+.game-area {
+  display: flex;
+  width: 100 vw;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-description {
+  width: 25vw;
+  color: white;
+  text-align: left;
+  padding: 1em;
+}
+
+.arena {
+  position: relative;
+  display: inline-block;
+}
+
+.game-settings {
+  width: 25vw;
+  color: white;
+  text-align: left;
+  padding: 1em;
+}
+
+.map-row {
+  display: inline-block;
+  width: 20px;
+}
+
+.block {
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.setting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+input {
+  margin-left: 1em;
+  width: 3em;
+}
+
+.input-text {
+  display: inline-block;
+  /* width: 20vw; */
+  text-align: left;
+}
+
+button {
+  height: 2em;
+  width: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
