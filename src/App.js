@@ -20,15 +20,18 @@ const PLAYER_COLORS = [
 function App() {
 
   const [render, setRender] = useState(false);
+  const [generateMap, setGenerateMap] = useState(false);
 
   const players = useRef([[0, 0, 1, 0.5, 0],[0, 0, 1, 0.5, 0]]);
   const mapReady = useRef(false);
+  const gameRunning = useRef(false);
   const startBlock = useRef(0);
   const randomMap = useRef([[]]);
   
   // initialize map
   useEffect(() => {
     const initialMap = new Array(MAP_SIZE).fill([]);
+    players.current = [[0, 0, 1, 0.5, 0],[0, 0, 1, 0.5, 0]];
 
     randomMap.current = initialMap.map((row, index) => {
       if(!(index%2)) {
@@ -55,18 +58,20 @@ function App() {
 
     // set start and end locations
     startBlock.current = randomMap.current[0][0];
+    mapReady.current = true;
     setRender(r => !r);
-  }, [])
+  }, [generateMap])
 
   // path finding
   useEffect(() => {
     const interval = setInterval(() => {
-      if(!mapReady.current) return;
+      if(!gameRunning.current) return;
 
       players.current.forEach((player, index) => {
 
         // if player reached end row, end game
         if(player[0] === (MAP_SIZE -1)) {
+          gameRunning.current = false;
           mapReady.current = false;
           return;
         }
@@ -229,9 +234,16 @@ function App() {
                 disabled={true}/>
             </div>
             <div className='setting'>
-              <button onClick={() => {
-                mapReady.current = true;
-              }}>
+              <button 
+                onClick={() => setGenerateMap(g => !g)}
+                disabled={gameRunning.current}>
+                regenerate map
+              </button>
+            </div>
+            <div className='setting'>
+              <button 
+                onClick={() => gameRunning.current = true}
+                disabled={!mapReady.current || gameRunning.current}>
                 start game
               </button>
             </div>
