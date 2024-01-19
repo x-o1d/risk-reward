@@ -21,6 +21,7 @@ function App() {
 
   const [render, setRender] = useState(false);
   const [generateMap, setGenerateMap] = useState(false);
+  const [wins, setWins] = useState([]);
 
   const players = useRef([[0, 0, 1, 0.7, 0],[0, 0, 1, 0.3, 0]]);
   const mapReady = useRef(false);
@@ -73,6 +74,8 @@ function App() {
         if(player[0] === (MAP_SIZE -1)) {
           gameRunning.current = false;
           mapReady.current = false;
+          wins.push(index);
+          setWins(wins);
           return;
         }
 
@@ -149,7 +152,7 @@ function App() {
         }
       })
       setRender((r) => !r);
-    }, 50);
+    }, 20);
 
     return () => clearInterval(interval);
   }, [])
@@ -251,6 +254,36 @@ function App() {
                 start game
               </button>
             </div>
+            <div className='setting'>
+              <div className='input-text'>
+                Black player wins
+              </div>
+              <div className='input-text'>
+                {wins.reduce((a, c) => {
+                  if(c === 0) return a + 1;
+                  else return a;
+                }, 0)/wins.length*100}%
+              </div>
+            </div>
+            <div className='setting'>
+              <div className='input-text'>
+                Pink player wins
+              </div>
+              <div className='input-text'>
+                {wins.reduce((a, c) => {
+                  if(c === 1) return a + 1;
+                  else return a;
+                }, 0)/wins.length*100}%
+              </div>
+            </div>
+            {wins.map((win) => {
+              return (
+                <div>
+                  {(win === 0)? 'Black ': 'Pink '}
+                  player won the game.
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
