@@ -4,7 +4,7 @@ import Robot from './components/Robot.js'
 
 const MAP_SIZE = 40;
 const BLOCK_SIZE = 20;
-const COST_OF_RISK = 25;
+const COST_OF_RISK = 15;
 
 const COLORS = [
   '#8ac926',
@@ -23,7 +23,7 @@ function App() {
   const [generateMap, setGenerateMap] = useState(false);
   const [wins, setWins] = useState([]);
 
-  const players = useRef([[0, 0, 1, 0.7, 0],[0, 0, 1, 0.3, 0]]);
+  const players = useRef([[0, 0, 1, 0.5, 0],[0, 0, 1, 0.5, 0]]);
   const mapReady = useRef(false);
   const gameRunning = useRef(false);
   const startBlock = useRef(0);
@@ -32,7 +32,13 @@ function App() {
   // initialize map
   useEffect(() => {
     const initialMap = new Array(MAP_SIZE).fill([]);
-    players.current = [[0, 0, 1, 0.5, 0],[0, 0, 1, 0.5, 0]];
+
+    // reset players
+    players.current.forEach((p) => {
+      p[0] = 0;
+      p[2] = 1;
+      p[4] = 0;
+    })
 
     randomMap.current = initialMap.map((row, index) => {
       if(!(index%2)) {
@@ -152,7 +158,7 @@ function App() {
         }
       })
       setRender((r) => !r);
-    }, 20);
+    }, 25);
 
     return () => clearInterval(interval);
   }, [])
